@@ -5,7 +5,7 @@ const connection = require("../config/connection.js");
 // Object for all our SQL statement functions.
 let orm = {
   selectAll: function(tableInput, cb) {
-    let queryString = "SELECT * FROM " + tableInput + ";";
+    let queryString = `SELECT * FROM ${tableInput};`;
     connection.query(queryString, function(err, result) {
       if (err) {
         throw err;
@@ -13,8 +13,8 @@ let orm = {
       cb(result);
     });
   },
-  insertOne: function(table, cols, vals, cb) {
-    let queryString = "INSERT INTO " + table;
+  insertOne: function(tableInput, cols, vals, cb) {
+    let queryString = `INSERT INTO ${tableInput} (${cols}) VALUES ("${vals}");`;
 
     console.log(queryString);
 
@@ -27,8 +27,8 @@ let orm = {
     });
   },
 
-  updateOne: function(table, objColVals, condition, cb) {
-    let queryString = "UPDATE " + table;
+  updateOne: function(tableInput, objColVals, boolean, condition, cb) {
+    let queryString = `UPDATE ${tableInput} SET ${objColVals} = ${boolean} WHERE ${condition};`;
 
     console.log(queryString);
     connection.query(queryString, function(err, result) {
@@ -39,8 +39,8 @@ let orm = {
       cb(result);
     });
   },
-  deleteOne: function(table, condition, cb) {
-    let queryString = "DELETE FROM " + table;
+  deleteOne: function(tableInput, condition, cb) {
+    let queryString = `DELETE FROM ${tableInput} WHERE ${condition};`;
 
     connection.query(queryString, function(err, result) {
       if (err) {
